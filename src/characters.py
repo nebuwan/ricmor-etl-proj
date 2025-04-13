@@ -1,12 +1,22 @@
 import requests
 
 baseurl = "https://rickandmortyapi.com/api/"
-
 endpoint = 'character'
 
-result = requests.get(baseurl + endpoint)
-data = result.json()
+def main_request(baseurl, endpoint):
+    result = requests.get(baseurl + endpoint)
+    return result.json()
 
-pages = data['info']['pages']
+def get_pages(response):
+    pages = response['info']['pages']
+    return pages
 
-print(data['results'][0]['name'])
+def parse_json(response):
+    for item in response['results']:
+        print(item['name'], len(item['episode']))
+    return
+    
+
+data = main_request(baseurl, endpoint)
+get_pages(data)
+parse_json(data)
