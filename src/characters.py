@@ -1,5 +1,3 @@
-#https://www.youtube.com/watch?v=-oPuGc05Lxs
-
 import requests
 
 baseurl = "https://rickandmortyapi.com/api/"
