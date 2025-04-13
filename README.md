@@ -1,1 +1,1 @@
-# supreme-broccoli
+# Rick and Morty API Demo
