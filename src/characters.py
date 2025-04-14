@@ -31,4 +31,8 @@ for x in range (1,get_pages(data)+1):
     print(x)
     mainlist.extend(parse_json(main_request(baseurl, endpoint, x)))
 
-print(len(mainlist))
+df = pd.DataFrame(mainlist)
+
+#print(df.head(), df.tail())
+
+df.to_csv('charlist.csv', index=False)
