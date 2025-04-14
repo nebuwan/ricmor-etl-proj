@@ -15,7 +15,7 @@ def parse_json(response):
     for item in response['results']:
         print(item['name'], len(item['episode']))
     return
-    
+
 
 data = main_request(baseurl, endpoint)
 get_pages(data)
