@@ -49,17 +49,17 @@ pip3 install -r requirements.txt
 Create a `.env` file at the project root:
 
 ```env
-DB_USER=admin
-DB_PASSWORD=admin123
+DB_USER=user
+DB_PASSWORD=password
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=sandbox
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=admin123
-POSTGRES_DB=sandbox
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+POSTGRES_DB=database
 POSTGRES_DATA=/your/local/path/postgres/data
-PGADMIN_DEFAULT_EMAIL=admin@admin.com
-PGADMIN_DEFAULT_PASSWORD=admin123
+PGADMIN_DEFAULT_EMAIL=user
+PGADMIN_DEFAULT_PASSWORD=password
 PGADMIN_DATA=/your/local/path/pgadmin/data
 ```
 
