@@ -1,12 +1,8 @@
-# 🧬 Rick and Morty ETL Project
+# Rick and Morty ETL Project
 
-This project extracts character data from the [Rick and Morty API](https://rickandmortyapi.com/), loads it into a **PostgreSQL staging table**, and applies **Slowly Changing Dimension (SCD) Type 2** logic to maintain historical records in a dimension table.
+This project extracts character data from the [Rick and Morty API](https://rickandmortyapi.com/), loads it into a PostgreSQL staging table, and applies Slowly Changing Dimension (SCD) Type 2 logic to maintain historical records in a dimension table.
 
-It is designed using modular Python scripts for easy maintenance and scalability.
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 rick_etl_project/
@@ -26,103 +22,96 @@ rick_etl_project/
     └── charlist.csv             # Extracted character data as CSV
 ```
 
----
+## Setup Instructions
 
-## ⚙️ Setup Instructions (macOS)
-
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/rick-etl-project.git
 cd rick-etl-project
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Create and Activate a Virtual Environment
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Create a `.env` file
+### 4. Configure Environment Variables
 
 Create a `.env` file at the project root:
 
 ```env
-DB_USER=your_user
-DB_PASSWORD=your_password
+DB_USER=admin
+DB_PASSWORD=admin123
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=sandbox
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin123
+POSTGRES_DB=sandbox
+POSTGRES_DATA=/your/local/path/postgres/data
+PGADMIN_DEFAULT_EMAIL=admin@admin.com
+PGADMIN_DEFAULT_PASSWORD=admin123
+PGADMIN_DATA=/your/local/path/pgadmin/data
 ```
 
-### 5. Create PostgreSQL tables
+Update paths for `POSTGRES_DATA` and `PGADMIN_DATA` as needed.
 
-Run these in your database:
-
-```sql
--- Create staging and dimension schemas/tables
-\i models/ddl_staging.sql
-\i models/ddl_dim.sql
-```
-
-### 6. Run the pipeline
+### 5. Start PostgreSQL and pgAdmin with Docker
 
 ```bash
-python etl/run_pipeline.py
+docker-compose up -d
 ```
 
----
+Access:
+- PostgreSQL: `localhost:5432`
+- pgAdmin: [http://localhost:5050](http://localhost:5050)
 
-## 💡 What the Pipeline Does
+### 6. Run the ETL Pipeline
 
-1. **Extract**: API → CSV (`data/charlist.csv`)
-2. **Load**: CSV → `staging.rick_and_morty_characters`
-3. **Transform**: Applies SCD2 logic → `dim.dim_character`
 
----
+The script will:
+- Create required tables
+- Extract data from the API
+- Load it to staging
+- Apply SCD2 merge into the dimension table
 
-## 🛠 Technologies Used
+## Technologies Used
 
-- Python (pandas, requests, SQLAlchemy)
-- PostgreSQL 15+
-- SQL DDL and DML (with `MERGE`)
-- `.env` configuration via `python-dotenv`
+- Python (requests, pandas, SQLAlchemy)
+- PostgreSQL 15+ (via Docker)
+- pgAdmin4 (via Docker)
+- Docker Compose
+- SQL DDL and DML (SCD2 with MERGE)
+- dotenv
 
----
+## Sample Output (dim.dim_character)
 
-## 📊 Sample Output (dim.dim_character)
+| character_key | api_id | character_name | episode_count | is_current | effective_date | end_date |
+|---------------|--------|----------------|----------------|------------|----------------|----------|
+| 1             | 1      | Rick Sanchez   | 51             | true       | 2025-05-10     | NULL     |
 
-| character_key | character_name  | episode_count | is_current | effective_date | end_date  |
-|---------------|------------------|---------------|------------|----------------|-----------|
-| 1             | Rick Sanchez     | 51            | true       | 2025-05-10     | NULL      |
-| 2             | Morty Smith      | 50            | false      | 2024-12-01     | 2025-05-01 |
+## Notes
 
----
+- PostgreSQL 15+ is required for `MERGE`
+- Designed for modular extensibility (e.g., Airflow, dbt, etc.)
 
-## 🔒 Notes
+## Future Enhancements
 
-- Requires PostgreSQL version 15 or higher for native `MERGE` support.
-- `MERGE` script handles SCD2 logic with `is_current`, `end_date`, and `effective_date`.
+- Add logging and error handling
+- Build dashboard integration
+- Extend for multiple dimensions (e.g., episodes, locations)
 
----
-
-## ✅ Future Enhancements
-
-- Airflow integration for scheduling
-- Logging and monitoring
-- API schema validation
-- Unit tests and coverage reports
-
----
-
-## 🙌 Acknowledgements
+## Acknowledgements
 
 - [Rick and Morty API](https://rickandmortyapi.com/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Docker Documentation](https://docs.docker.com/)
