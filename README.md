@@ -3,6 +3,7 @@
 This project extracts character data from the [Rick and Morty API](https://rickandmortyapi.com/), loads it into a **PostgreSQL staging table**, and applies **Slowly Changing Dimension (SCD) Type 2** logic to maintain historical records in a dimension table.
 
 It is designed using modular Python scripts for easy maintenance and scalability.
+
 ---
 
 ## 📁 Project Structure
