@@ -5,7 +5,7 @@ This project extracts character data from the [Rick and Morty API](https://ricka
 ## Project Structure
 
 ```
-rick_etl_project/
+ricmor_etl_proj/
 ├── .env                         # Environment variables for PostgreSQL
 ├── extract_char.py              # Extract: Fetches character data from API
 ├── db_utils.py                  # Utility: Connects to PostgreSQL via SQLAlchemy
