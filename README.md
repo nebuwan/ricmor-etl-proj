@@ -41,7 +41,7 @@ source .venv/bin/activate
 ### 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ### 4. Configure Environment Variables
@@ -115,3 +115,4 @@ The script will:
 - [Rick and Morty API](https://rickandmortyapi.com/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 - [Docker Documentation](https://docs.docker.com/)
+- [DataCamp SCD Documentation](https://www.datacamp.com/tutorial/mastering-slowly-changing-dimensions-scd)
