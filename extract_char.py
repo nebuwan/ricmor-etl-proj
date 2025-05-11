@@ -18,8 +18,10 @@ def parse_json(response):
     charlist = []
     for item in response['results']:
         charlist.append({
+            'api_id': item['id'],
             'name': item['name'],
             'no_ep': len(item['episode']),
+            'created_at': item['created'],
         })
     return charlist
 
@@ -40,4 +42,4 @@ def extract_characters():
     df = pd.DataFrame(all_chars)
     Path("data").mkdir(exist_ok=True)
     df.to_csv("data/charlist.csv", index=False)
-    print("✅ Data saved to data/charlist.csv")
+    print("Data saved to data/charlist.csv")

@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+from sqlalchemy import text
 from extract_char import extract_characters
 from load.load_to_staging import load_to_staging
 from db_utils import get_engine
@@ -7,7 +12,10 @@ def run_sql_script(path):
     with engine.begin() as conn:
         with open(path) as f:
             sql = f.read()
-        conn.execute(sql)
+        # Split on semicolon to handle multiple statements
+        for stmt in sql.split(";"):
+            if stmt.strip():
+                conn.execute(text(stmt))
 
 def main():
     print("Creating tables if not exists...")
