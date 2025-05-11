@@ -1,4 +1,4 @@
-from db_utils import get_engine
+from .db_utils import get_engine
 from sqlalchemy import text
 
 def test_db():
