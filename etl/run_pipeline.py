@@ -14,7 +14,7 @@ def main():
     extract_characters()
     load_to_staging("data/charlist.csv")
     run_sql_script("transform/merge_dim_character.sql")
-    print("✅ ETL pipeline complete.")
+    print("ETL pipeline complete.")
 
 if __name__ == "__main__":
     main()

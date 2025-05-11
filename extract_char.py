@@ -40,4 +40,4 @@ def extract_characters():
     df = pd.DataFrame(all_chars)
     Path("data").mkdir(exist_ok=True)
     df.to_csv("data/charlist.csv", index=False)
-    print("✅ Data saved to data/charlist.csv")
+    print("Data saved to data/charlist.csv")
