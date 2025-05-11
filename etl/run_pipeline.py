@@ -10,10 +10,19 @@ def run_sql_script(path):
         conn.execute(sql)
 
 def main():
-    print("Starting ETL pipeline...")
+    print("Creating tables if not exists...")
+    run_sql_script("models/ddl_staging.sql")
+    run_sql_script("models/ddl_dim.sql")
+
+    print("Extracting characters...")
     extract_characters()
+
+    print("Loading to staging...")
     load_to_staging("data/charlist.csv")
+
+    print("Merging into dimension table...")
     run_sql_script("transform/merge_dim_character.sql")
+
     print("ETL pipeline complete.")
 
 if __name__ == "__main__":

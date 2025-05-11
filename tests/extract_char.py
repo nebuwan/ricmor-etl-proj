@@ -1,8 +1,6 @@
 import requests
 import pandas as pd
-
-baseurl = "https://rickandmortyapi.com/api/"
-endpoint = 'character'
+from pathlib import Path
 
 def main_request(baseurl, endpoint, page):
     try:
@@ -25,19 +23,24 @@ def parse_json(response):
         })
     return charlist
 
-if __name__ == "__main__":
+def extract_characters():
+    baseurl = "https://rickandmortyapi.com/api/"
+    endpoint = 'character'
     data = main_request(baseurl, endpoint, 1)
     if not data:
-        exit()
+        return
 
-    mainlist = []
+    all_chars = []
     total_pages = get_pages(data)
-
     for page in range(1, total_pages + 1):
         response = main_request(baseurl, endpoint, page)
         if response:
-            mainlist.extend(parse_json(response))
+            all_chars.extend(parse_json(response))
 
-    df = pd.DataFrame(mainlist)
-    df.to_csv('charlist.csv', index=False)
-    print("Data saved to charlist.csv")
+    df = pd.DataFrame(all_chars)
+    Path("data").mkdir(exist_ok=True)
+    df.to_csv("data/charlist.csv", index=False)
+    print("Data saved to data/charlist.csv")
+
+if __name__ == "__main__":
+    extract_characters()
